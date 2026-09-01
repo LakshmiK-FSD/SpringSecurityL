@@ -18,33 +18,5 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class FarmConfiguration {
-@Bean
-    public SecurityFilterChain filterChain(HttpSecurity http){
-    http.csrf(customize->customize.disable())
-    .authorizeHttpRequests(request->request.anyRequest().authenticated())
-    .httpBasic(Customizer.withDefaults())
-    .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-    return http.build();
-}
-@Bean
-    public AuthenticationProvider provider(){
-    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-    provider.
-}
 
-//@Bean
-//    public UserDetailsService userDetailsService(){
-//    UserDetails user1 = User.withDefaultPasswordEncoder()
-//                                   .username("fita")
-//                                   .password("fita")
-//                                   .roles("manager").build();
-//    UserDetails user2 = User.withDefaultPasswordEncoder()
-//            .username("admin")
-//            .password("admin")
-//            .roles("manager").build();
-//    List <UserDetails> users = new ArrayList<>();
-//    users.add(user1);
-//    users.add(user2);
-//    return new InMemoryUserDetailsManager(users);
-//}
 }
