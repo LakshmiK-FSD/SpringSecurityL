@@ -19,16 +19,5 @@ public class FarmerController {
     public List<Farmers> baseMap(){
         return farmObj.base();
     }
-    @GetMapping("/home")
-    public CsrfToken token(HttpServletRequest http){
-        return (CsrfToken) http.getAttribute("_csrf");
-    }
-    @PostMapping
-    public String add(@RequestBody Farmers farm){
-        return farmObj.adder(farm);
-    }
-    @GetMapping ("/get")
-    public String show(HttpSession http){
-        return http.getId().toString();
-    }
+
 }
