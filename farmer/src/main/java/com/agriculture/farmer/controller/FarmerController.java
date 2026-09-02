@@ -6,33 +6,35 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @Data
 @RestController
-@RequestMapping("farms")
+//@RequestMapping("farms")
 public class FarmerController {
     @Autowired
     public FarmerService farmObj;
-    @GetMapping
+    @GetMapping("/public/all")
     public List<Farmers> baseMap(){
         return farmObj.base();
     }
-    @GetMapping("/home")
+    @GetMapping("/users/farms/home")
     public CsrfToken token(HttpServletRequest http){
         return (CsrfToken) http.getAttribute("_csrf");
     }
-    @PostMapping
+    @PostMapping("/admin/farms")
     public String add(@RequestBody Farmers farm){
         return farmObj.adder(farm);
     }
-    @GetMapping ("/get")
+    @GetMapping ("/users/farms/get")
     public String show(HttpSession http){
         return http.getId().toString();
     }
-    @PostMapping("/pass")
+    @PostMapping("/admin/pass")
     public String passAdd(@RequestBody Users user){
         return farmObj.passAdd(user);
     }
+
 }

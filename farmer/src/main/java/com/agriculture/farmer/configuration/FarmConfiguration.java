@@ -26,7 +26,10 @@ public class FarmConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http){
         http.csrf(customize->customize.disable())
-                .authorizeHttpRequests(request->request.anyRequest().authenticated())
+                .authorizeHttpRequests(request->request.requestMatchers("/admin/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/users/**").hasAnyRole("ADMIN","USER")
+                        .requestMatchers("/public/**").permitAll()
+                        .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
