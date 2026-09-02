@@ -1,6 +1,6 @@
 package com.agriculture.farmer.controller;
-
 import com.agriculture.farmer.model.Farmers;
+import com.agriculture.farmer.model.Users;
 import com.agriculture.farmer.service.FarmerService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -30,5 +30,9 @@ public class FarmerController {
     @GetMapping ("/get")
     public String show(HttpSession http){
         return http.getId().toString();
+    }
+    @PostMapping("/pass")
+    public String passAdd(@RequestBody Users user){
+        return farmObj.passAdd(user);
     }
 }
