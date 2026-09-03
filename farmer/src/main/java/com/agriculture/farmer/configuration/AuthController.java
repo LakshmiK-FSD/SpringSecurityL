@@ -1,7 +1,6 @@
 package com.agriculture.farmer.configuration;
 
 import com.agriculture.farmer.model.Users;
-import com.agriculture.farmer.repository.UserRepo;
 import com.agriculture.farmer.service.AuthService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -19,5 +18,9 @@ public class AuthController {
     @PostMapping("/register")
     public String register(@RequestBody Users users){
        return authserv.saver(users);
+    }
+    @PostMapping("/login")
+    public String loginUser(Users user){
+        return
     }
 }
