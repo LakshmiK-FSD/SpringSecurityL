@@ -30,7 +30,7 @@ public class FarmConfiguration {
                         .requestMatchers("/users/**").hasAnyRole("ADMIN","USER")
                         .requestMatchers("/public/**").permitAll()
                         .anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults())
+//                .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
     }
