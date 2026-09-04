@@ -8,6 +8,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import com.agriculture.farmer.model.UserPrincipal;
+
+import java.util.Optional;
+
 @Component
 @Data
 public class MyUserDetailService implements UserDetailsService {
@@ -15,10 +18,11 @@ public class MyUserDetailService implements UserDetailsService {
     private UserRepo repo;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users user = repo.getByUsername(username);
-        if (user == null) {
+        Optional<Users> user = repo.findByUsername(username);
+        if (user.isEmpty()) {
             throw new UsernameNotFoundException("User Not Found");
         }
-        return new UserPrincipal(user);
+        Users userFinal = user.get();
+        return new UserPrincipal(userFinal);
     }
 }

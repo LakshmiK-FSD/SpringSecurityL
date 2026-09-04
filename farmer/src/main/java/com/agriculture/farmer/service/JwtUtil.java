@@ -13,8 +13,8 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    private static final String SECRET = "I Am The LK";
-    private static final long EXPIRATION = 1000 *40;
+    private static final String SECRET = "THE KING OF THE INDIAN OCEAN Sorry for the distanbance";
+    private static final long EXPIRATION = 1000 *60 * 2;
     private static final Key secretKey = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
 
     public String tokenGener(String usrNam){

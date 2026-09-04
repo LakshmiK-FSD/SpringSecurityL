@@ -1,4 +1,6 @@
 package com.agriculture.farmer.configuration;
+import com.agriculture.farmer.service.AuthFilterChain;
+import com.agriculture.farmer.service.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 import java.util.ArrayList;
 import java.util.List;
 @Configuration
@@ -24,14 +28,16 @@ public class FarmConfiguration {
     @Autowired
     UserDetailsService userDetailsService;
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http){
+    public SecurityFilterChain filterChain(HttpSecurity http, AuthFilterChain authFilterChain){
         http.csrf(customize->customize.disable())
                 .authorizeHttpRequests(request->request.requestMatchers("/admin/**").hasAnyRole("ADMIN")
                         .requestMatchers("/users/**").hasAnyRole("ADMIN","USER")
                         .requestMatchers("/public/**").permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers("/auth/**").permitAll()
+                        .anyRequest().authenticated()).addFilterBefore(authFilterChain, UsernamePasswordAuthenticationFilter.class)
 //                .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
         return http.build();
     }
     @Bean
@@ -40,6 +46,11 @@ public class FarmConfiguration {
         provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
         return provider;
     }
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+        return new BCryptPasswordEncoder(12);
+    }
+
 
 //@Bean
 //    public UserDetailsService userDetailsService(){

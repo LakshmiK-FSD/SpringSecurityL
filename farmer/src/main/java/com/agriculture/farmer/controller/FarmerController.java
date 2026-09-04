@@ -16,7 +16,7 @@ import java.util.List;
 public class FarmerController {
     @Autowired
     public FarmerService farmObj;
-    @GetMapping("/public/all")
+    @GetMapping("/admin/all")
     public List<Farmers> baseMap(){
         return farmObj.base();
     }
@@ -38,3 +38,4 @@ public class FarmerController {
     }
 
 }
+
